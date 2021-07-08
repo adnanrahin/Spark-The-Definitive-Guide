@@ -3,6 +3,7 @@ package apache.spark.apis.structuredapis
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.SparkSession
 
+
 object LoadingJsonInDataFrames {
 
   def main(args: Array[String]): Unit = {
@@ -20,6 +21,14 @@ object LoadingJsonInDataFrames {
     df.printSchema()
 
     df.foreach(row => println(row))
+
+    val dfSchema = df.schema
+
+    println(dfSchema.getClass)
+
+    val dfTable = df.createOrReplaceTempView("dfTable")
+
+
 
   }
 
