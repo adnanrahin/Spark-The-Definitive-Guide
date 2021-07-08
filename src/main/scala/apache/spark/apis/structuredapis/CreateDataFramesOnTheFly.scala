@@ -24,6 +24,7 @@ object CreateDataFramesOnTheFly {
 
     val myDf = spark.createDataFrame(myRDD, myManualSchema)
     println(myDf.show())
+
   }
 
 }

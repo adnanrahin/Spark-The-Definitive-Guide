@@ -28,7 +28,9 @@ object LoadingJsonInDataFrames {
 
     val dfTable = df.createOrReplaceTempView("dfTable")
 
+    val showFirstTwoDestCountry = df.select("DEST_COUNTRY_NAME").limit(3)
 
+    println(showFirstTwoDestCountry.show)
 
   }
 
