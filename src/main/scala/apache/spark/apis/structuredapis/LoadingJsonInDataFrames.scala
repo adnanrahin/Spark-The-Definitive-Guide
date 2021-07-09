@@ -2,7 +2,7 @@ package apache.spark.apis.structuredapis
 
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions.{expr, lit}
+import org.apache.spark.sql.functions.{col, expr, lit}
 
 
 object LoadingJsonInDataFrames {
@@ -40,6 +40,14 @@ object LoadingJsonInDataFrames {
     val withInCountry = df.withColumn("WithInCountry", expr("ORIGIN_COUNTRY_NAME == DEST_COUNTRY_NAME"))
 
     println(withInCountry.show(20))
+
+    /*
+    * Filter Data Frame
+    * */
+
+    val filterCountTwo = df.filter(col("count") < 2)
+
+    println(filterCountTwo.show(10))
 
   }
 
