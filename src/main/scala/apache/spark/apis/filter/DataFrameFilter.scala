@@ -2,7 +2,7 @@ package apache.spark.apis.filter
 
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions.col
+import org.apache.spark.sql.functions.{col, expr}
 
 object DataFrameFilter {
 
@@ -25,6 +25,29 @@ object DataFrameFilter {
     val filterByCountryName = df.where(col("ORIGIN_COUNTRY_NAME").startsWith("C"))
 
     println(filterByCountryName.show(30))
+
+    val withInCountry = df.withColumn("WithInCountry", expr("ORIGIN_COUNTRY_NAME == DEST_COUNTRY_NAME"))
+
+    println(withInCountry.show(20))
+
+    /*
+    * Filter Data Frame
+    * */
+
+    val filterCountTwo = df.filter(col("count") < 2)
+
+    println(filterCountTwo.show(10))
+
+    println(df.where("count < 2").show(2))
+
+    val multipleExpression = df.where("count < 2")
+      .where(col("ORIGIN_COUNTRY_NAME") =!= "Croatia")
+
+    println(multipleExpression.show(3))
+
+    val distinctRows = df.select("ORIGIN_COUNTRY_NAME").distinct()
+
+    println(distinctRows.show(10))
 
   }
 
