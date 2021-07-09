@@ -49,6 +49,17 @@ object LoadingJsonInDataFrames {
 
     println(filterCountTwo.show(10))
 
+    println(df.where("count < 2").show(2))
+
+    val multipleExpression = df.where("count < 2")
+      .where(col("ORIGIN_COUNTRY_NAME") =!= "Croatia")
+
+    println(multipleExpression.show(3))
+
+    val distinctRows = df.select("ORIGIN_COUNTRY_NAME").distinct()
+
+    println(distinctRows.show(10))
+
   }
 
 }
