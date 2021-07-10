@@ -2,6 +2,7 @@ package apache.spark.apis.differenttypesodata
 
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions.col
 
 object ConvertingToSparkTypes {
 
@@ -20,9 +21,17 @@ object ConvertingToSparkTypes {
       .option("inferSchema", "true")
       .load("data/retail-data/by-day/2010-12-01.csv")
 
-    println(df.printSchema())
+    val dfTable: Unit = df.createOrReplaceTempView("dfTable")
 
     println(df.show(20))
+
+    println(dfTable)
+
+    val filterInvoice = df.select("InvoiceNo", "Description")
+      .where(col("InvoiceNo").equalTo(536365))
+
+
+    println(filterInvoice.show(5))
 
   }
 
