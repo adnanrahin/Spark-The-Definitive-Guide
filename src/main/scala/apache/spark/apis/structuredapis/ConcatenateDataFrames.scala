@@ -1,9 +1,8 @@
-package apache.spark.apis.concatenate
+package apache.spark.apis.structuredapis
 
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.functions.col
 import org.apache.spark.sql.{Row, SparkSession}
-
 
 object ConcatenateDataFrames {
 
@@ -41,7 +40,7 @@ object ConcatenateDataFrames {
     val unionDf = df.union(newDataFrame)
 
     val findBangladesh = unionDf.filter(col("ORIGIN_COUNTRY_NAME") === "Bangladesh" or
-      col("DEST_COUNTRY_NAME") === "Bangladesh" )
+      col("DEST_COUNTRY_NAME") === "Bangladesh")
 
     println(findBangladesh.show())
 
