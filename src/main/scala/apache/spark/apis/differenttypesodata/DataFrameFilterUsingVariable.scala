@@ -4,7 +4,7 @@ import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.col
 
-object ConvertingToSparkTypes {
+object DataFrameFilterUsingVariable {
 
   def main(args: Array[String]): Unit = {
 
@@ -21,18 +21,15 @@ object ConvertingToSparkTypes {
       .option("inferSchema", "true")
       .load("data/retail-data/by-day/2010-12-01.csv")
 
-    val dfTable: Unit = df.createOrReplaceTempView("dfTable")
 
-    println(df.show(20))
+    val priceFilter = col("UnitPrice") > 600
 
-    println(dfTable)
+    val descripFilter = col("Description").contains("POSTAGE")
 
-    val filterInvoice = df.select("InvoiceNo", "Description")
-      .where(col("InvoiceNo").equalTo(536365))
+    val priceAndDescDf = df.where(col("StockCode").isin("DOT"))
+      .where(priceFilter.or(descripFilter))
 
-    println(filterInvoice.show(5, truncate = false))
-
-
+    println(priceAndDescDf.show(30, truncate = false))
 
   }
 
