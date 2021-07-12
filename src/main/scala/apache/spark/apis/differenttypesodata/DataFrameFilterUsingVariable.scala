@@ -21,7 +21,6 @@ object DataFrameFilterUsingVariable {
       .option("inferSchema", "true")
       .load("data/retail-data/by-day/2010-12-01.csv")
 
-
     val priceFilter = col("UnitPrice") > 600
 
     val descripFilter = col("Description").contains("POSTAGE")
@@ -30,6 +29,8 @@ object DataFrameFilterUsingVariable {
       .where(priceFilter.or(descripFilter))
 
     println(priceAndDescDf.show(30, truncate = false))
+
+
 
   }
 
