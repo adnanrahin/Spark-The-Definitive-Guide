@@ -10,10 +10,6 @@ import scala.collection.mutable.ListBuffer
 
 object ListFileDirectoriesInHdfs {
 
-  val RETENTION = "Retention"
-  val CHECKBACKUP = "CheckBackup"
-  val NUMSFILES = "NumsFiles"
-
   def main(args: Array[String]): Unit = {
 
     val spark = SparkSession
@@ -46,24 +42,6 @@ object ListFileDirectoriesInHdfs {
       .groupBy(_.getPath.getParent.toString)
     fileSystemMap.map(f => f._2.sortBy(_.getModificationTime))
     fileSystemMap
-  }
-
-  def readMetaFile(fs: FileSystem, path: Path): Map[String, String] = {
-    val bufferedReader = new BufferedReader(new InputStreamReader(fs.open(path)))
-    try {
-      Stream.continually(bufferedReader.readLine()).takeWhile(_ != null).flatMap(l => {
-        val tokens = l.split(":").map(_.trim)
-        tokens(0) match {
-          case RETENTION => Option(RETENTION, tokens(1))
-          case CHECKBACKUP => Option(CHECKBACKUP, tokens(1))
-          case NUMSFILES => Option(NUMSFILES, tokens(1))
-          case _ => None
-        }
-      }).toMap
-    }
-    finally {
-      bufferedReader.close()
-    }
   }
 
 }
