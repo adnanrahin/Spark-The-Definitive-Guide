@@ -16,8 +16,6 @@ object ReadFileFromHdfsCluster {
       .appName("ReadFileFromHdfsCluster")
       .getOrCreate()
 
-    val fs = FileSystem.get(new URI("hdfs://localhost:9000/"), new Configuration())
-
     val df = spark.read.format("csv")
       .option("header", "true")
       .option("inferSchema", "true")
