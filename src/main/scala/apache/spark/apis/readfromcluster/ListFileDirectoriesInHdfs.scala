@@ -25,7 +25,7 @@ object ListFileDirectoriesInHdfs {
 
     val fs = FileSystem.get(new URI("hdfs://localhost:9000/"), new Configuration())
 
-    val filePath = new Path("/online")
+    val filePath = new Path("/data")
 
     val remoteIterator = fs.listFiles(filePath, true)
 
@@ -41,24 +41,22 @@ object ListFileDirectoriesInHdfs {
     val metaList = fileTreeMap.flatMap(directory => {
       directory._2.filter(file => file.getPath.toString.endsWith(".meta")
         && readMetaFile(fs, file.getPath).contains(NUMSFILES))
-    })
+    }).toList
 
-    println(metaList.map(_.getPath.toString.toSet))
+    println(metaList.foreach(file => println(file.getPath)))
+
+    println("Test Script Running")
+
+    println(fileTreeMap.foreach(f => println(f._1)))
 
     val filterOutNonMetaFileDirectory =
       fileTreeMap
-        .filterKeys(key =>
-          metaList.map(_.getPath.toString.filter(f => f.toString.endsWith(key))).toSet)
+        .filterKeys(key => filterKeyIfMatch(metaList, key))
 
 
+    println(metaList.size + " " + filterOutNonMetaFileDirectory.size)
 
-    filterOutNonMetaFileDirectory.foreach(f => println(f._2))
-
-    println(metaList.getClass)
-
-    metaList.foreach(file => println(file.getPath))
-
-    val filterFileSystem = fileTreeMap.flatMap {
+    val filterFileSystem = filterOutNonMetaFileDirectory.flatMap {
       case (_, files) => files.find(x => x.getPath.toString.endsWith(".meta")) match {
         case Some(file) =>
           val index = Integer.parseInt(readMetaFile(fs, file.getPath).getOrElse(NUMSFILES, 0.toString))
@@ -69,7 +67,7 @@ object ListFileDirectoriesInHdfs {
       }
     }
 
-    //filterFileSystem.foreach(f => println(f.getPath + " : " + new Date(f.getModificationTime) ))
+    filterFileSystem.foreach(f => println(f.getPath + " : " + new Date(f.getModificationTime) ))
 
   }
 
@@ -96,6 +94,11 @@ object ListFileDirectoriesInHdfs {
     finally {
       bufferedReader.close()
     }
+  }
+
+  def filterKeyIfMatch(metaList: List[FileStatus], key: String): Boolean = {
+    val isMetListContainKey = metaList.exists(_.getPath.toString.startsWith(key + "/.meta"))
+    isMetListContainKey
   }
 
 }
