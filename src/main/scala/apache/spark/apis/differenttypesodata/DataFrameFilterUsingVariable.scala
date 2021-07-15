@@ -30,7 +30,13 @@ object DataFrameFilterUsingVariable {
 
     println(priceAndDescDf.show(30, truncate = false))
 
+    val dotCodeFilter = col("StockCode") === "DOT"
 
+    val newDfVal = df.withColumn("isExpensive", dotCodeFilter.and(priceFilter.or(descripFilter)))
+      .where("isExpensive")
+      .select("unitPrice", "isExpensive")
+
+    println(newDfVal.show(50, truncate = true))
 
   }
 
