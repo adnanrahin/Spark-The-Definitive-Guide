@@ -1,9 +1,8 @@
 package apache.spark.apis.aggregations
 
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions.{sum, count, avg, expr}
 
-object AggregateFunctions {
+object Grouping {
 
   def main(args: Array[String]): Unit = {
 
@@ -22,22 +21,7 @@ object AggregateFunctions {
 
     val dfTable: Unit = df.createOrReplaceTempView("dfTable")
 
-    println(df.count())
-
-    val countNumberOfDfRow = df.select(count("StockCode"))
-    println(countNumberOfDfRow.show(10))
-
-
-    /*Spark Average*/
-
-    val avgDf = df.select(
-      count("Quantity").alias("total_transactions"),
-      sum("Quantity").alias("total_purchases"),
-      avg("Quantity").alias("average_purchases"),
-        expr("mean(Quantity)").alias("mean_purchases")
-    )
-
-    println(avgDf.show(5))
+    println(df.groupBy("InvoiceNo", "CustomerId").count().show())
 
   }
 
