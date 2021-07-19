@@ -48,9 +48,15 @@ object CreatingRDD {
 
     println(flatWord.mkString("Array(", ", ", ")"))
 
+
+    /* Create new RDD using map function*/
     val wordsKeyVal = words.map(word => (word.toLowerCase, 1, word.length))
 
     wordsKeyVal.foreach(row => println(row))
+
+    val keyword = words.keyBy(word => word.toLowerCase.toSeq.head.toString)
+
+    println(keyword.toString)
 
   }
 
