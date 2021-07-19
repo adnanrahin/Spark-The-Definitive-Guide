@@ -68,7 +68,7 @@ object CreatingRDD {
 
     val keyValuesToFlatMap = keyword.flatMapValues(word => word.toUpperCase).collect()
 
-    println(keyValuesToFlatMap)
+    println(keyValuesToFlatMap.mkString("Array(", ", ", ")"))
 
   }
 
