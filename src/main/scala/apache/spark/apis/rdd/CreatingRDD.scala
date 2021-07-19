@@ -56,7 +56,19 @@ object CreatingRDD {
 
     val keyword = words.keyBy(word => word.toLowerCase.toSeq.head.toString)
 
-    println(keyword.toString)
+    keyword.foreach(word => println(word))
+
+    println("Keyword maps values to Upper Case")
+
+    val toUpperCaseMapValue = keyword.mapValues(word => word.toUpperCase).collect()
+
+    toUpperCaseMapValue.foreach(println)
+
+    println("Flat Map Words")
+
+    val keyValuesToFlatMap = keyword.flatMapValues(word => word.toUpperCase).collect()
+
+    println(keyValuesToFlatMap)
 
   }
 
