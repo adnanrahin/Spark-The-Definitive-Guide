@@ -42,6 +42,12 @@ object CreatingRDD {
 
     words2.foreach(word => println(word))
 
+    println("Flat Map")
+
+    val flatWord = words.flatMap(word => word.toSeq).take(23)
+
+    println(flatWord.mkString("Array(", ", ", ")"))
+
   }
 
   def startsWithS(word: String) = {
