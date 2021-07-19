@@ -48,6 +48,10 @@ object CreatingRDD {
 
     println(flatWord.mkString("Array(", ", ", ")"))
 
+    val wordsKeyVal = words.map(word => (word.toLowerCase, 1, word.length))
+
+    wordsKeyVal.foreach(row => println(row))
+
   }
 
   def startsWithS(word: String) = {
