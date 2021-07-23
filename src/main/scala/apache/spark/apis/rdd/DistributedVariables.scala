@@ -28,8 +28,11 @@ object DistributedVariables {
     println(suppBroadcast.value)
 
     val wordsMapWIthSuppBroadCast =
-      words.map(word => (word, suppBroadcast.value.getOrElse(word, 0)))
-
+      words
+        .map(word => (word, suppBroadcast.value.getOrElse(word, 0)))
+        .sortBy(wordPair => wordPair._2)
+        .collect()
+        
     wordsMapWIthSuppBroadCast.foreach(row => println(row))
 
   }
