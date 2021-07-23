@@ -101,7 +101,7 @@ object CreatingRDD {
     println("LETTER FREQUENCY IN KEYS")
 
     val letterFrequencyMap = kvCharacters.groupByKey().map(k => (k._1, k._2.reduce(addFunc))).collect()
-    
+
     letterFrequencyMap.foreach(key => println(key._1 + " " + key._2))
 
     /** foldByKey function**/
