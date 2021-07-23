@@ -78,6 +78,12 @@ object CreatingRDD {
 
     println(distinctChars.mkString("Array(", ", ", ")"))
 
+    val chars = words.flatMap(word => word.toLowerCase.toSeq)
+
+    println(chars.toString())
+
+    val kvCharacters = chars.map(letter => (letter, 1))
+
   }
 
   def startsWithS(word: String) = {
