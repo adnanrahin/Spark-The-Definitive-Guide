@@ -80,9 +80,11 @@ object CreatingRDD {
 
     val chars = words.flatMap(word => word.toLowerCase.toSeq)
 
-    println(chars.toString())
+    chars.foreach(c => print(c + ", "))
 
     val kvCharacters = chars.map(letter => (letter, 1))
+
+    kvCharacters.foreach(k => println(k._1 + " " + k._2))
 
   }
 
