@@ -70,6 +70,14 @@ object CreatingRDD {
 
     println(keyValuesToFlatMap.mkString("Array(", ", ", ")"))
 
+    /*
+    * Get all distinct Characters
+    * */
+
+    val distinctChars = words.flatMap(word => word.toLowerCase.toSeq).distinct.collect()
+
+    println(distinctChars.mkString("Array(", ", ", ")"))
+
   }
 
   def startsWithS(word: String) = {
