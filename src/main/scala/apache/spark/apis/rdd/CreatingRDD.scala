@@ -82,6 +82,8 @@ object CreatingRDD {
 
     chars.foreach(c => print(c + ", "))
 
+    /** Key values RDD Creating **/
+
     val kvCharacters = chars.map(letter => (letter, 1))
 
     kvCharacters.foreach(k => println(k._1 + " " + k._2))
@@ -93,6 +95,8 @@ object CreatingRDD {
     val numSum = addFunc(4, 5)
 
     println(numSum)
+
+    /** RDD to find all the characters frequency in key-value pair characters map**/
 
     val letterFrequencyMap = kvCharacters.groupByKey().map(k => (k._1, k._2.reduce(addFunc))).collect()
 
