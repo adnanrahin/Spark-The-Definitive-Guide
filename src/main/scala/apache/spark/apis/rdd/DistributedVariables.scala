@@ -12,7 +12,7 @@ object DistributedVariables {
       .appName("DistributedVariables")
       .getOrCreate()
 
-    
+
 
   }
 
