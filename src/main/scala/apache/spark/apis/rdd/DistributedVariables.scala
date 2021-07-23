@@ -17,11 +17,20 @@ object DistributedVariables {
 
     val words = spark.sparkContext.parallelize(myCollection, 2)
 
+    words.foreach(str => println(str))
+
     val supplementalData = Map("Spark" -> 1000, "Definitive" -> 2000, "Big" -> -300, "Simple" -> 100)
 
     val suppBroadcast = spark.sparkContext.broadcast(supplementalData)
 
     println(suppBroadcast.getClass)
+
+    println(suppBroadcast.value)
+
+    val wordsMapWIthSuppBroadCast =
+      words.map(word => (word, suppBroadcast.value.getOrElse(word, 0)))
+
+    wordsMapWIthSuppBroadCast.foreach(row => println(row))
 
   }
 
