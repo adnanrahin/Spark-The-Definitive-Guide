@@ -98,9 +98,19 @@ object CreatingRDD {
 
     /** RDD to find all the characters frequency in key-value pair characters map**/
 
-    val letterFrequencyMap = kvCharacters.groupByKey().map(k => (k._1, k._2.reduce(addFunc))).collect()
+    println("LETTER FREQUENCY IN KEYS")
 
+    val letterFrequencyMap = kvCharacters.groupByKey().map(k => (k._1, k._2.reduce(addFunc))).collect()
+    
     letterFrequencyMap.foreach(key => println(key._1 + " " + key._2))
+
+    /** foldByKey function**/
+
+    val foldByKey = kvCharacters.foldByKey(0)(addFunc).collect()
+
+    println("FOLD BY KEY")
+
+    foldByKey.foreach(row => println(row))
 
   }
 
