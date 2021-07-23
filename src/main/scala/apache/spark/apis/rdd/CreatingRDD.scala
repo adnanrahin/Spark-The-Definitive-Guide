@@ -86,6 +86,18 @@ object CreatingRDD {
 
     kvCharacters.foreach(k => println(k._1 + " " + k._2))
 
+    def maxFunc(left: Int, right: Int): Int = math.max(left, right)
+
+    def addFunc(left: Int, right: Int): Int = left + right
+
+    val numSum = addFunc(4, 5)
+
+    println(numSum)
+
+    val letterFrequencyMap = kvCharacters.groupByKey().map(k => (k._1, k._2.reduce(addFunc))).collect()
+
+    letterFrequencyMap.foreach(key => println(key._1 + " " + key._2))
+
   }
 
   def startsWithS(word: String) = {
