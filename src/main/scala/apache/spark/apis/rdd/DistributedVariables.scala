@@ -17,7 +17,11 @@ object DistributedVariables {
 
     val words = spark.sparkContext.parallelize(myCollection, 2)
 
-    
+    val supplementalData = Map("Spark" -> 1000, "Definitive" -> 2000, "Big" -> -300, "Simple" -> 100)
+
+    val suppBroadcast = spark.sparkContext.broadcast(supplementalData)
+
+    println(suppBroadcast.getClass)
 
   }
 
